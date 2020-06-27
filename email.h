@@ -16,6 +16,18 @@ class email
 public:
 	email(string , string, string );
 	email(string);
+	email();
+	email(const email& rhs) { 
+		message = rhs.message;
+		subject = rhs.subject;
+		sender = rhs.sender;
+		spamScore = rhs.spamScore; }
+	email& operator=(email* rhs) {
+		message = rhs->getMessage();
+		subject = rhs->subject;
+		sender = rhs->sender;
+		spamScore = rhs->spamScore;
+	};
 	string getMessage();
 	string getSubject();
 	string getSender();
@@ -55,7 +67,13 @@ email::email (string a, string b, string c)
 		sender  = "test";
 		spamScore = 0;
 	}
-
+	email::email()
+	{
+		message= "test";
+		subject = "test";
+		sender  = "test";
+		spamScore = 0;
+	}
 	vector<string> email::tokenizeEmail()
 	{
 		string buf; // Have a buffer string

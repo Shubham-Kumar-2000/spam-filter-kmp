@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "random": "cpp",
+        "new": "cpp",
+        "system_error": "cpp",
+        "iostream": "cpp"
+    }
+}

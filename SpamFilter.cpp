@@ -9,6 +9,7 @@
 #include "email.h"
 #include "EmailFilter.h"
 #include <string>
+#include<windows.h>
 using namespace std;
 
 void create_pi_table( string pattern, int l2, int *pi)
@@ -73,9 +74,52 @@ bool KMP (string original, string pattern)
 	return false;
 }
 
-
+void intro(string str){
+	int i=0;
+	cout<<"                                         ";
+	while (i<str.length())
+	{
+		cout<<str[i];
+		Sleep(100);
+		i++;
+	}
+	Sleep(500);
+	while (i>0)
+	{
+		cout<<"\b \b";
+		Sleep(100);
+		i--;
+	}
+}
 int main()
 {
+	intro("WELCOME TO SPAM FILTER");
+	char choice;
+	cout<<"\nDo you want give email as a file?[Y/N] : ";
+	cin>>choice;
+	
+	//An email object is created from a text a file
+	email testing;
+	if(tolower(choice)=='y')
+	{
+		cout<<"Enter file's relative path : ";
+		string path;
+		cin>>path;
+		testing=(new email(path));
+		
+	}
+	else{
+		string subject,sender,message;
+		cout<<"Enter Sender : ";
+		cin>>sender;
+		cin.clear();
+		cin.ignore();
+		cout<<"Enter Subject : ";
+		getline(cin,subject);
+		cout<<"Enter message : ";
+		getline(cin,message);
+		testing=(new email(message,subject,sender));
+	}
 	//This will create the input stream for the spamwords text file
 	ifstream spamwordsTextFileInput;
 
@@ -87,21 +131,27 @@ int main()
 
 	// This vector will hold all the filters
 	vector<EmailFilter> filters;
-	
-	//An email object is created from a text a file
-	email testing("emailtoRead.txt");
 
 	//The email is tokenized by white spaces
 	vector<string> tokenEmail = testing.tokenizeEmail();
 
 	//Here the list of spam words from the text file is opened from the text file
-	spamwordsTextFileInput.open("spamWords.txt");
+	string path;
+	cout<<"Enter relative path to spam words list : ";
+	cin>>path;
+	spamwordsTextFileInput.open(path.c_str());
 	if(spamwordsTextFileInput.is_open())
 	{
 		while( getline(spamwordsTextFileInput, spamWordsList)){
 			filters.push_back(EmailFilter(spamWordsList));
 		}
 	}
+	else
+	{
+		cout<<"ERR :\tUnable to open given path.\n\nIf you dont have your own custom spam word list then you can download it from :\nhttps://github.com/Shubham-Kumar-2000/spam-filter-kmp/blob/master/spamWords.txt";
+		return 0;
+	}
+	
 
 	//Spam words are tokenized and put into spamtokens vector
 	string buf; 
@@ -135,9 +185,6 @@ int main()
 		if(KMP(testing.getMessage(),currentFilter.getFilter()))
 		testing.setSpamScore(testing.getSpamScore() + currentFilter.getSpamFilterValue());
 	}
-	cout << "Tom's Email Spam Filter 2015 \n";
-	cout << "To change the email, edit emailtoRead.txt \n";
-	cout << "\n";
 	cout << "Email Message: ";
 	cout << testing.getMessage();
 	cout << "\n";
