@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include<bits/stdc++.h>
 using namespace std;
 
 
@@ -46,9 +47,16 @@ private:
 	ifstream inputText;
 	ofstream outputText;
 };
+string toLowercase(string m){
+	string inLower="";
+	for(int i=0;i<(m.length());i++){
+		inLower+=(std::tolower(m[i]));
+	}
+	return inLower;
+}
 email::email (string a, string b, string c)
 	{
-		message = a;
+		message=toLowercase(a);
 		subject = b;
 		sender = c;
 		spamScore = 0;
@@ -58,11 +66,15 @@ email::email (string a, string b, string c)
 	email::email(string fileInput)
 	{
 		inputText.open(fileInput.c_str());
+		message="";
 		if(inputText.is_open())
 		{
-			while( getline(inputText, message));
+			string m="";
+			while( getline(inputText, m)){
+				message+=(m+" ");
+			};
 		}
-	
+		message=toLowercase(message);
 		subject = "test";
 		sender  = "test";
 		spamScore = 0;

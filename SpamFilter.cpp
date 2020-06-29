@@ -184,7 +184,7 @@ int main()
 	for(int j = 0; j < filters.size(); j++)
 	{
 		EmailFilter currentFilter = filters.at(j);
-		testing.setSpamScore(testing.getSpamScore()+ KMP(testing.getMessage(),currentFilter.getFilter()) * currentFilter.getSpamFilterValue());
+		testing.setSpamScore(testing.getSpamScore()+ (KMP(testing.getMessage(),currentFilter.getFilter()) * currentFilter.getSpamFilterValue()));
 	}
 	
 	cout << "Email Message: ";
@@ -213,6 +213,9 @@ int main()
 	{
 		cout << " This Email had a spam ratio of less than .15, hence this email is not spam \n"; 
 	}
+	cin.clear();
+	cin.ignore();
+	cin.get();
 }
 
 

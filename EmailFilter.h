@@ -64,13 +64,13 @@ private:
 
 EmailFilter::EmailFilter(string input)
 {
-	word = trim(input);
+	word = toLowercase(trim(input));
 	spamFilterValue = countWords(word);
 }
 
 EmailFilter::EmailFilter(string input, int spamValue)
 {
-	word = input;
+	word = toLowercase(trim(input));
 	spamFilterValue = spamValue;
 }
 
