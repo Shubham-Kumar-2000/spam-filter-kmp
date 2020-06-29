@@ -46,6 +46,7 @@ int countWords(string str)
   
     return wc+1;  
 } 
+
 class EmailFilter
 {
 public:
@@ -60,6 +61,7 @@ private:
 	int spamFilterValue;
 
 };
+
 EmailFilter::EmailFilter(string input)
 {
 	word = trim(input);
@@ -93,3 +95,4 @@ int EmailFilter::getSpamFilterValue()
 }
 
 #endif
+

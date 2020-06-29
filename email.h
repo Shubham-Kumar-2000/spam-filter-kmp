@@ -67,6 +67,7 @@ email::email (string a, string b, string c)
 		sender  = "test";
 		spamScore = 0;
 	}
+	
 	email::email()
 	{
 		message= "test";

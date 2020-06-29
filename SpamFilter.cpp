@@ -40,9 +40,9 @@ void create_pi_table( string pattern, int l2, int *pi)
     }
 }
 
-
-bool KMP (string original, string pattern)
+int KMP (string original, string pattern)
 {
+	int count = 0;
     int l1 = original.length();
     int l2 = pattern.length();
     int pi[l2];
@@ -59,7 +59,7 @@ bool KMP (string original, string pattern)
         }
         if (j == l2)
         {
-            return true;
+            count++;
             j= pi[j-1];
         }
 
@@ -71,7 +71,7 @@ bool KMP (string original, string pattern)
                 i = i+1;
         }
     }
-	return false;
+	return count;
 }
 
 void intro(string str){
@@ -95,7 +95,7 @@ int main()
 {
 	intro("WELCOME TO SPAM FILTER");
 	char choice;
-	cout<<"\nDo you want give email as a file?[Y/N] : ";
+	cout<<"\nDo you want to give email as a file?[Y/N] : ";
 	cin>>choice;
 	
 	//An email object is created from a text a file
@@ -108,6 +108,7 @@ int main()
 		testing=(new email(path));
 		
 	}
+
 	else{
 		string subject,sender,message;
 		cout<<"Enter Sender : ";
@@ -120,6 +121,7 @@ int main()
 		getline(cin,message);
 		testing=(new email(message,subject,sender));
 	}
+
 	//This will create the input stream for the spamwords text file
 	ifstream spamwordsTextFileInput;
 
@@ -182,9 +184,9 @@ int main()
 	for(int j = 0; j < filters.size(); j++)
 	{
 		EmailFilter currentFilter = filters.at(j);
-		if(KMP(testing.getMessage(),currentFilter.getFilter()))
-		testing.setSpamScore(testing.getSpamScore() + currentFilter.getSpamFilterValue());
+		testing.setSpamScore(testing.getSpamScore()+ KMP(testing.getMessage(),currentFilter.getFilter()) * currentFilter.getSpamFilterValue());
 	}
+	
 	cout << "Email Message: ";
 	cout << testing.getMessage();
 	cout << "\n";
@@ -212,3 +214,5 @@ int main()
 		cout << " This Email had a spam ratio of less than .15, hence this email is not spam \n"; 
 	}
 }
+
+
