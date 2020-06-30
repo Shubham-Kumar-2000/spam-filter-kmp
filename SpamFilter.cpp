@@ -155,32 +155,6 @@ int main()
 	}
 	
 
-	//Spam words are tokenized and put into spamtokens vector
-	string buf; 
-	stringstream ss(spamWordsList); 
-	vector<string> Spamtokens; 
-	while (ss >> buf)
-		Spamtokens.push_back(buf);
-
-	//spam tokens are put into vector of spam filters
-	// for(vector<string>::iterator spamWords = Spamtokens.begin(); spamWords != Spamtokens.end(); ++spamWords)
-	// {
-	// 	filters.push_back(EmailFilter(*spamWords));
-	// }
-
-	//Here the email searched and compared with the spam filters
-	// for(int i = 0; i < tokenEmail.size(); i++)
-	// {
-	// 	for(int j = 0; j < filters.size(); j++)
-	// 	{
-	// 		EmailFilter currentFilter = filters.at(j);
-	// 		if(tokenEmail.at(i) == currentFilter.getFilter())
-	// 		{
-	// 			testing.setSpamScore(testing.getSpamScore() + currentFilter.getSpamFilterValue());
-	// 		}
-	// 	}
-	// }
-	// int sss=0;
 	for(int j = 0; j < filters.size(); j++)
 	{
 		EmailFilter currentFilter = filters.at(j);
